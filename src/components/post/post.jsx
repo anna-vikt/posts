@@ -1,11 +1,20 @@
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, Typography } from "@mui/material"
 import { ExpandMore as ExpandMoreIcon, Favorite as FavoriteIcon, MoreVert as MoreVertIcon, Share as ShareIcon } from '@mui/icons-material';
 
-import s from './post.module.css';
-// import 'dayjs/locale/ru';
-
 import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+
+import s from './post.module.css';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+
+
+dayjs.locale('ru');
+dayjs.extend(relativeTime)
+
+
 
 
 export const Post = ({ image, title, text, created_at, author}) => {
@@ -30,7 +39,7 @@ export const Post = ({ image, title, text, created_at, author}) => {
                         </IconButton>
                     }
                     title={author.email}
-                    // subheader={dayjs(created_at).fromNow()}
+                    subheader={dayjs(created_at).fromNow()}
                 />
                 <CardMedia
                     component="img"
