@@ -1,6 +1,6 @@
 import s from "./styles.module.css";
 
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { Menu as MenuIcon, Add } from '@mui/icons-material';
 
 import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
@@ -23,6 +23,7 @@ export function AppHeader() {
             Posts
           </Typography>
           <Button color="inherit">Login</Button>
+          <Button color="inherit"><Add/></Button>
         </Toolbar>
       </AppBar>
     )
