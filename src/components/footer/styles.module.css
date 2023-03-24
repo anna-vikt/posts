@@ -1,0 +1,14 @@
+.footer {
+  padding-top: 10px;
+  padding-bottom: 10px; 
+}
+
+.footer__text {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.icons {
+  text-align: center;
+  opacity: 0.5;
+}
