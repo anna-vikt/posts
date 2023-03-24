@@ -11,6 +11,10 @@ class Api {
         return res.ok? res.json() : res.json().then(err => Promise.reject(err))
     }
 
+    getAllInfo() {
+        return Promise.all([this.getPostsList(), this.getUserInfo()])
+    }
+
     getPostsList() {
         return fetch(`${this.#baseUrl}/posts`, {
             headers: this.#headers
@@ -21,6 +25,14 @@ class Api {
     getUserInfo () {
         return fetch(`${this.#baseUrl}/users/me`, {
             headers: this.#headers
+        })
+            .then(this.#onResponse)
+    }
+
+    changeLikePostStatus(postID, like) {
+        return fetch(`${this.#baseUrl}/posts/likes/${postID}`, {
+            method: like ? 'DELETE' : 'PUT',
+            headers: this.#headers,
         })
             .then(this.#onResponse)
     }
@@ -36,12 +48,12 @@ const api = new Api ({
 }
 )
 
-api.getPostsList()
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+// api.getPostsList()
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
 
-api.getUserInfo()
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+// api.getUserInfo()
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
 
 export default api;

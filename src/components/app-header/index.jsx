@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
 
 
-export function AppHeader() {
+export function AppHeader({user}) {
     return (
         <AppBar className={s.appbar} position="static">
         <Toolbar>
@@ -22,7 +22,7 @@ export function AppHeader() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Posts
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" >{user?.name}:{user?.about}</Button>
           <Button color="inherit"><Add/>Создать пост</Button>
         </Toolbar>
       </AppBar>
