@@ -23,7 +23,7 @@ export function AppHeader() {
             Posts
           </Typography>
           <Button color="inherit">Login</Button>
-          <Button color="inherit"><Add/></Button>
+          <Button color="inherit"><Add/>Создать пост</Button>
         </Toolbar>
       </AppBar>
     )
