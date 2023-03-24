@@ -5,6 +5,10 @@ import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
 import { Footer } from "../footer";
 
+import api from "../../utils/api";
+
+
+
 
 export function App() {
     return (
