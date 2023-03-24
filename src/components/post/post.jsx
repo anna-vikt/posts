@@ -58,8 +58,8 @@ export const Post = ({ image, title, text, created_at, author, onPostLike, _id, 
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing sx={{ marginTop: 'auto' }}>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon onClick={handleClickButtonLike}/>
+                    <IconButton aria-label="add to favorites" onClick={handleClickButtonLike}>
+                        <FavoriteIcon/>
                     </IconButton>
                     <IconButton
                         sx={{
