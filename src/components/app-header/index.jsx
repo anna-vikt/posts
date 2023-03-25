@@ -23,7 +23,11 @@ export function AppHeader({user}) {
             Posts
           </Typography>
           <Button color="inherit" >{user?.name}:{user?.about}</Button>
-          <Button color="inherit"><Add/>Создать пост</Button>
+          <Button color="inherit" 
+          onClick={() => {
+              console.log('Есть контакт');
+            }} >
+              <Add/>Создать пост</Button>
         </Toolbar>
       </AppBar>
     )
