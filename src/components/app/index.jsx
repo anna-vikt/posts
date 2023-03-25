@@ -1,24 +1,17 @@
-import { useState } from 'react'
-import { CssBaseline } from "@mui/material";
-import { Container } from "@mui/system";
+
 import { postData } from "../../postData";
 import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
 import { Popup } from "../popup";
-
-
-export function App() {
-    const [popupActive, setPopupActive] = useState(false);
-    const handleOpenPopup = () => {
-        setPopupActive(true)
-    }
-
 import { Footer } from "../footer";
 
 import api from "../../utils/api";
 import { useEffect, useState } from "react";
 import { isLiked } from "../../utils/post";
-import { Popup } from "../popup";
+
+import { CssBaseline } from "@mui/material";
+import { Container } from "@mui/system";
+
 
 
 

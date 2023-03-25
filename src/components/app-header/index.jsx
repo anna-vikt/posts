@@ -28,10 +28,7 @@ export function AppHeader({user, handleOpenPopup}) {
 
           <Button color="inherit" >{user?.name}:{user?.about}</Button>
           <Button color="inherit" 
-          onClick={() => {
-              console.log('Есть контакт');
-             handleOpenPopup
-            }} >
+          onClick={handleOpenPopup} >
               <Add/>Создать пост</Button>
 
         </Toolbar>

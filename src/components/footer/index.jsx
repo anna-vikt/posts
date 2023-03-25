@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <Container className={s.footer}>
       <Typography className={s.footer__text}>
-        Footer from index.jsx
+        
       </Typography>
 
       <Container className={s.icons}>
