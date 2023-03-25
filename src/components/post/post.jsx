@@ -73,10 +73,12 @@ export const Post = ({
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing sx={{ marginTop: 'auto' }}>
+
                     <button className={cn('card__favorite', { 'card__favorite_is-active': like })} onClick={handleClickButtonLike}>
                         <LikeIcon className="card__favorite-icon" />
                         {/* <img src={likeIcon} alt="" className="card__favorite-icon" /> */}
                     </button>
+
                     <IconButton
                         sx={{
                             transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',
