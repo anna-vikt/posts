@@ -30,8 +30,6 @@ export function App() {
         api.changeLikePostStatus(post._id, like)
             .then((updateCard) => {
                 const newPosts = posts.map(cardState => {
-                    console.log("old", cardState);
-                    console.log("new", cardState);
                     return cardState._id === updateCard._id ? updateCard : cardState
                 })
 
@@ -44,7 +42,7 @@ export function App() {
             <CssBaseline />
             <Container>
                 <AppHeader user={currentUser} />
-                <PostList posts={posts} onPostLike={handlePostLike}/>
+                <PostList posts={posts} onPostLike={handlePostLike} currentUser={currentUser}/>
                 <Footer />
             </Container>
         </>
