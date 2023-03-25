@@ -6,7 +6,9 @@ import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
 
 
-export function AppHeader({user}) {
+
+export function AppHeader({user, handleOpenPopup}) {
+
     return (
         <AppBar className={s.appbar} position="static">
         <Toolbar>
@@ -16,18 +18,22 @@ export function AppHeader({user}) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleOpenPopup}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Posts
           </Typography>
+
           <Button color="inherit" >{user?.name}:{user?.about}</Button>
           <Button color="inherit" 
           onClick={() => {
               console.log('Есть контакт');
+             handleOpenPopup
             }} >
               <Add/>Создать пост</Button>
+
         </Toolbar>
       </AppBar>
     )

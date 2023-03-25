@@ -1,20 +1,34 @@
+import { useState } from 'react'
 import { CssBaseline } from "@mui/material";
 import { Container } from "@mui/system";
 import { postData } from "../../postData";
 import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
+import { Popup } from "../popup";
+
+
+export function App() {
+    const [popupActive, setPopupActive] = useState(false);
+    const handleOpenPopup = () => {
+        setPopupActive(true)
+    }
+
 import { Footer } from "../footer";
 
 import api from "../../utils/api";
 import { useEffect, useState } from "react";
 import { isLiked } from "../../utils/post";
-
+import { Popup } from "../popup";
 
 
 
 export function App() {
     const [posts, setPosts] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+    const [popupActive, setPopupActive] = useState(false);
+    const handleOpenPopup = () => {
+        setPopupActive(true)
+    }
 
     useEffect(() => {
         api.getAllInfo()
@@ -37,14 +51,20 @@ export function App() {
             })
     }
 
+
     return (
         <>
             <CssBaseline />
             <Container>
-                <AppHeader user={currentUser} />
+
+                <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup}/>
                 <PostList posts={posts} onPostLike={handlePostLike} currentUser={currentUser}/>
                 <Footer />
+
             </Container>
+            <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, provident iste voluptates pariatur neque mollitia eum quibusdam numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum. Repellendus, molestiae iure!</p>
+            </Popup>
         </>
 
     )
