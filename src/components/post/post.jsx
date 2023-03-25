@@ -4,10 +4,14 @@ import { ExpandMore as ExpandMoreIcon, Favorite as FavoriteIcon, MoreVert as Mor
 import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
-import s from './post.module.css';
+// import s from './post.module.css';
+import './post.css';
 import dayjs from 'dayjs';
+import cn from "classnames";
 import 'dayjs/locale/ru';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { isLiked } from "../../utils/post";
+import { ReactComponent as LikeIcon } from '../../images/save.svg';
 
 
 
@@ -17,20 +21,35 @@ dayjs.extend(relativeTime)
 
 
 
-export const Post = ({ image, title, text, created_at, author}) => {
+export const Post = ({
+    image,
+    title,
+    text,
+    created_at,
+    author,
+    onPostLike,
+    _id,
+    likes,
+    currentUser
+}) => {
     const [expanded, setExpanded] = useState(false);
+    const like = isLiked(likes, currentUser._id);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
+    function handleClickButtonLike() {
+        onPostLike({ likes, _id })
+    }
+
     return (
         <Grid2 item sx={{ display: 'flex' }} xs={12} sm={6} md={4} lg={3} >
-            <Card className={s.card}>
+            <Card className='card'>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" src={author.avatar}>
-                            {author.email.slice(0, 1).toUpperCase()}
+
                         </Avatar>
                     }
                     action={
@@ -38,7 +57,7 @@ export const Post = ({ image, title, text, created_at, author}) => {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={author.email}
+                    title={`${author.name} ${author.about}`}
                     subheader={dayjs(created_at).fromNow()}
                 />
                 <CardMedia
@@ -54,9 +73,12 @@ export const Post = ({ image, title, text, created_at, author}) => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing sx={{ marginTop: 'auto' }}>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
+
+                    <button className={cn('card__favorite', { 'card__favorite_is-active': like })} onClick={handleClickButtonLike}>
+                        <LikeIcon className="card__favorite-icon" />
+                        {/* <img src={likeIcon} alt="" className="card__favorite-icon" /> */}
+                    </button>
+
                     <IconButton
                         sx={{
                             transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',

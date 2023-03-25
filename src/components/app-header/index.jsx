@@ -6,7 +6,9 @@ import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
 
 
-export function AppHeader({handleOpenPopup}) {
+
+export function AppHeader({user, handleOpenPopup}) {
+
     return (
         <AppBar className={s.appbar} position="static">
         <Toolbar>
@@ -23,8 +25,15 @@ export function AppHeader({handleOpenPopup}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Posts
           </Typography>
-          <Button onClick={handleOpenPopup} color="inherit">Login</Button>
-          <Button onClick={handleOpenPopup} color="inherit"><Add/></Button>
+
+          <Button color="inherit" >{user?.name}:{user?.about}</Button>
+          <Button color="inherit" 
+          onClick={() => {
+              console.log('Есть контакт');
+             handleOpenPopup
+            }} >
+              <Add/>Создать пост</Button>
+
         </Toolbar>
       </AppBar>
     )
