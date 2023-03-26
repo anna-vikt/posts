@@ -4,6 +4,7 @@ import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
 import { Popup } from "../popup";
 import { Footer } from "../footer";
+import { AppPagination } from "../pagination";
 
 import api from "../../utils/api";
 import { useEffect, useState } from "react";
@@ -52,6 +53,7 @@ export function App() {
 
                 <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup}/>
                 <PostList posts={posts} onPostLike={handlePostLike} currentUser={currentUser}/>
+                <AppPagination />
                 <Footer />
 
             </Container>
