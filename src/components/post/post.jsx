@@ -76,8 +76,8 @@ export const Post = ({
 
                     <button className={cn('card__favorite', { 'card__favorite_is-active': like })} onClick={handleClickButtonLike}>
                         <LikeIcon className="card__favorite-icon" />
-                        {/* <img src={likeIcon} alt="" className="card__favorite-icon" /> */}
                     </button>
+                    {likes.length !== 0 && <div className="likes">{likes.length}</div>}
 
                     <IconButton
                         sx={{
