@@ -45,6 +45,16 @@ export function App() {
             })
     }
 
+    function handlePostDelete(post) {
+        api.deletePost(post._id)
+            .then((updatePost) => {
+                const newPosts = posts.filter(post => {
+                    return post._id !== updatePost._id;
+                })
+                setPosts(newPosts)
+
+            })
+    }
 
     return (
         <>
@@ -52,7 +62,10 @@ export function App() {
             <Container>
 
                 <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup}/>
-                <PostList posts={posts} onPostLike={handlePostLike} currentUser={currentUser}/>
+                <PostList posts={posts} 
+                    onPostLike={handlePostLike} 
+                    currentUser={currentUser} 
+                    onDelete={handlePostDelete}/>
                 <AppPagination />
                 <Footer />
 

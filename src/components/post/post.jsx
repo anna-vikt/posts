@@ -1,5 +1,5 @@
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, Typography } from "@mui/material"
-import { ExpandMore as ExpandMoreIcon, Favorite as FavoriteIcon, MoreVert as MoreVertIcon, Share as ShareIcon } from '@mui/icons-material';
+import { ExpandMore as ExpandMoreIcon, Favorite as FavoriteIcon, Delete as DeleteIcon, MoreVert as MoreVertIcon, Share as ShareIcon } from '@mui/icons-material';
 
 import { useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -28,12 +28,14 @@ export const Post = ({
     created_at,
     author,
     onPostLike,
+    onDelete,
     _id,
     likes,
     currentUser
 }) => {
     const [expanded, setExpanded] = useState(false);
     const like = isLiked(likes, currentUser._id);
+    const canDelete = currentUser?._id === author._id
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -41,6 +43,10 @@ export const Post = ({
 
     function handleClickButtonLike() {
         onPostLike({ likes, _id })
+    }
+
+    function handleClickDelete() {
+        onDelete({ _id })
     }
 
     return (
@@ -52,11 +58,13 @@ export const Post = ({
 
                         </Avatar>
                     }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
+                    
+                    action={canDelete &&
+                        (<IconButton aria-label="settings" onClick={handleClickDelete} >
+                            <DeleteIcon />
+                        </IconButton>)
                     }
+                    
                     title={`${author.name} ${author.about}`}
                     subheader={dayjs(created_at).fromNow()}
                 />
@@ -78,7 +86,7 @@ export const Post = ({
                         <LikeIcon className="card__favorite-icon" />
                     </button>
                     {likes.length !== 0 && <div className="likes">{likes.length}</div>}
-
+                   
                     <IconButton
                         sx={{
                             transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',
