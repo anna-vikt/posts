@@ -45,6 +45,17 @@ class Api {
             .then(this.#onResponse)
     }
 
+    getPostById(idPost) {
+        return fetch(`${this.#baseUrl}/posts/${idPost}`, {
+            headers: this.#headers
+        })
+            .then(this.#onResponse)
+    }
+
+    getInfoPost(idPost) {
+        return Promise.all([this.getProductById(idPost), this.getUserInfo()])
+    }
+
 }
 
 
