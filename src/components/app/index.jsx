@@ -12,6 +12,8 @@ import { isLiked } from "../../utils/post";
 
 import { CssBaseline } from "@mui/material";
 import { Container } from "@mui/system";
+import PostDetailed from "../post-detailed/post-detailed";
+import PostPage from "../../pages/post-page";
 
 
 
@@ -60,8 +62,9 @@ export function App() {
         <>
             <CssBaseline />
             <Container>
-
+                <PostPage/>
                 <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup}/>
+                
                 <PostList posts={posts} 
                     onPostLike={handlePostLike} 
                     currentUser={currentUser} 
