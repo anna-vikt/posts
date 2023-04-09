@@ -53,7 +53,7 @@ class Api {
     }
 
     getInfoPost(idPost) {
-        return Promise.all([this.getProductById(idPost), this.getUserInfo()])
+        return Promise.all([this.getPostById(idPost), this.getUserInfo()])
     }
 
 }
