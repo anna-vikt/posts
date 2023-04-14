@@ -12,6 +12,7 @@ import 'dayjs/locale/ru';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { isLiked } from "../../utils/post";
 import { ReactComponent as LikeIcon } from '../../images/save.svg';
+import { Link } from "react-router-dom";
 
 
 
@@ -68,12 +69,15 @@ export const Post = ({
                     title={`${author.name} ${author.about}`}
                     subheader={dayjs(created_at).fromNow()}
                 />
-                <CardMedia
+                <Link to={`postpage/${_id}`}>
+                    <CardMedia
                     component="img"
                     height="194"
                     image={image}
                     alt={title}
                 />
+                </Link>
+                
                 <CardContent>
                     <Typography variant='h5' component="h3" gutterBottom>{title}</Typography>
                     <Typography variant="body2" color="text.secondary" component="p" noWrap>

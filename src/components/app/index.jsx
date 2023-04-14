@@ -59,7 +59,7 @@ export function App() {
       <Container>
         <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup} />
         <Routes>
-            <Route  path="/postpage" element={<PostPage onPostLike={handlePostLike}/>}
+            <Route  path="/postpage/:postID" element={<PostPage onPostLike={handlePostLike}/>}
            />
            <Route path="/" element={<PostList
           posts={posts}

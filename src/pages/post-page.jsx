@@ -21,14 +21,14 @@ function PostPage() {
     }
 
     useEffect(() => {
-        api.getInfoPost(ID_POST)
+        api.getInfoPost(postID)
             .then(([postData, userData]) => {
                 console.log(postData, userData);
                 setPost(postData);
                 setCurrentUser(userData)
             })
         
-    }, [])
+    }, [postID])
 
     
     return ( 
