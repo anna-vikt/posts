@@ -4,11 +4,13 @@ import { Menu as MenuIcon, Add } from '@mui/icons-material';
 
 import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
+import { UserContext } from "../../contexts/current-user-context";
+import { useContext } from "react";
 
 
 
-export function AppHeader({user, handleOpenPopup}) {
-
+export function AppHeader({ handleOpenPopup}) {
+  const user = useContext(UserContext);
     return (
         <AppBar className={s.appbar} position="static">
         <Toolbar>

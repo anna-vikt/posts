@@ -12,7 +12,7 @@ dayjs.locale('ru');
 dayjs.extend(relativeTime)
 
 function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const like = isLiked(likes, user?._id);
 
 
@@ -23,7 +23,7 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} md={12}>
-        <Button variant="outlined" href="#outlined-buttons" size="small" sx={{ margin: '0.5rem 1rem 1rem 0' }}>
+        <Button variant="outlined"  size="small" onClick ={() => {navigate(-1)}} sx={{ margin: '0.5rem 1rem 1rem 0' }}>
           Назад
         </Button>
       </Grid>
@@ -59,11 +59,11 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
               <LikeIcon />
             </button>
             {likes?.length !== 0 && <div className={s.likes}>{likes?.length}</div>}
-            <div className={s.tags}>
+            {tags?.length !==0 && <div className={s.tags}>
               {tags?.map(el => {
                 return el = `#${el} `
               })}
-            </div>
+            </div>}
 
           </CardActions>
 

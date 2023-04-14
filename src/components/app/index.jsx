@@ -14,11 +14,13 @@ import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
 import { Route, Routes } from "react-router-dom";
+import { UserContext } from "../../contexts/current-user-context";
 
 export function App() {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   const handleOpenPopup = () => {
     setPopupActive(true);
   };
@@ -35,12 +37,18 @@ export function App() {
 
   function handlePostLike(post) {
     const like = isLiked(post.likes, currentUser._id);
-    api.changeLikePostStatus(post._id, like).then((updateCard) => {
+    return api.changeLikePostStatus(post._id, like).then((updateCard) => {
       const newPosts = posts.map((cardState) => {
         return cardState._id === updateCard._id ? updateCard : cardState;
       });
 
       setPosts(newPosts);
+
+      if (!like) {
+        setFavorites(prevState => [...prevState, updateCard])
+      } else {
+          setFavorites(prevState => prevState.filter(card => card._id !== updateCard._id))
+        }
     });
   }
 
@@ -55,33 +63,40 @@ export function App() {
 
   return (
     <>
-      <CssBaseline />
-      <Container>
-        <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup} />
-        <Routes>
-            <Route  path="/postpage/:postID" element={<PostPage onPostLike={handlePostLike}/>}
-           />
-           <Route path="/" element={<PostList
-          posts={posts}
-          onPostLike={handlePostLike}
-          currentUser={currentUser}
-          onDelete={handlePostDelete}
-        />}
-        />
-        </Routes>
+      <UserContext.Provider value={currentUser}>
+        <CssBaseline />
+        <Container>
+          <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup} />
+          <Routes>
+            <Route
+              path="/postpage/:postID"
+              element={<PostPage onPostLike={handlePostLike} />}
+            />
+            <Route
+              path="/"
+              element={
+                <PostList
+                  posts={posts}
+                  onPostLike={handlePostLike}
+                  currentUser={currentUser}
+                  onDelete={handlePostDelete}
+                />
+              }
+            />
+          </Routes>
 
-        
-        <AppPagination />
-        <Footer />
-      </Container>
-      <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
-          provident iste voluptates pariatur neque mollitia eum quibusdam
-          numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum.
-          Repellendus, molestiae iure!
-        </p>
-      </Popup>
+          <AppPagination />
+          <Footer />
+        </Container>
+        <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
+            provident iste voluptates pariatur neque mollitia eum quibusdam
+            numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum.
+            Repellendus, molestiae iure!
+          </p>
+        </Popup>
+      </UserContext.Provider>
     </>
   );
 }
