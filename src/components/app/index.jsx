@@ -15,6 +15,7 @@ import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
 import { Route, Routes } from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
+import { NotFoundPage } from "../../pages/notfoundpage";
 
 export function App() {
   const [posts, setPosts] = useState([]);
@@ -83,6 +84,7 @@ export function App() {
                 />
               }
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
 
           <AppPagination />
