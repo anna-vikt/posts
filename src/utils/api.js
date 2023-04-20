@@ -56,6 +56,16 @@ class Api {
         return Promise.all([this.getPostById(idPost), this.getUserInfo()])
     }
 
+    getPaginate(page) {
+        return fetch(`${this.#baseUrl}/posts/paginate?page=${page}&limit=12`, {
+          headers: this.#headers,
+        }).then(this.#onResponse);
+      }
+
+    getPaginateInfo(page) {
+        return Promise.all([this.getPaginate(page), this.getUserInfo()]);
+      }
+
 }
 
 
