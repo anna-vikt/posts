@@ -91,12 +91,7 @@ export function App() {
           <Footer />
         </Container>
         <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
-            provident iste voluptates pariatur neque mollitia eum quibusdam
-            numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum.
-            Repellendus, molestiae iure!
-          </p>
+          
         </Popup>
       </UserContext.Provider>
     </>
