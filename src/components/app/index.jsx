@@ -14,6 +14,7 @@ import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
 import { Route, Routes } from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
+import { NotFoundPage } from "../../pages/notfoundpage";
 
 export function App() {
   const [posts, setPosts] = useState([]);
@@ -98,8 +99,9 @@ export function App() {
                 />
               }
             />
-             </Routes>
-            <Stack>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+           <Stack>
              {!!pageQty && (
               <Pagination
                count={pageQty}
@@ -118,15 +120,11 @@ export function App() {
               />
               )}
             </Stack> 
-          <Footer />  
+          <AppPagination />
+          <Footer />
         </Container>
         <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
-            provident iste voluptates pariatur neque mollitia eum quibusdam
-            numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum.
-            Repellendus, molestiae iure!
-          </p>
+          
         </Popup>
       </UserContext.Provider>
     </>

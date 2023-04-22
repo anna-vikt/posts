@@ -4,6 +4,7 @@ import PostDetailed from "../components/post-detailed/post-detailed";
 import api from "../utils/api";
 import { isLiked } from "../utils/post";
 import { useParams } from "react-router-dom";
+import { NotFoundPage } from "./notfoundpage";
 
 const ID_POST = '6432e07daa39712183bd932b';
 
