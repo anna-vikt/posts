@@ -120,7 +120,6 @@ export function App() {
               />
               )}
             </Stack> 
-          <AppPagination />
           <Footer />
         </Container>
         <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
