@@ -3,13 +3,12 @@ import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
 import { Popup } from "../popup";
 import { Footer } from "../footer";
-import { AppPagination } from "../pagination";
 
 import api from "../../utils/api";
 import { useEffect, useState } from "react";
 import { isLiked } from "../../utils/post";
 
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Pagination, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
@@ -20,6 +19,9 @@ import { NotFoundPage } from "../../pages/notfoundpage";
 export function App() {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pageQty, setPageQty] = useState(0);
+  const [refresh, setRefresh] = useState(true);
   const [popupActive, setPopupActive] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const handleOpenPopup = () => {
@@ -35,6 +37,17 @@ export function App() {
       })
       .catch((data) => console.log(data));
   }, []);
+
+  useEffect(() => {
+    api
+      .getPaginateInfo(page)
+      .then(([postsData, userInfoData]) => {
+        setCurrentUser(userInfoData);
+        setPosts(postsData.posts);
+        setPageQty(Math.ceil(postsData.total / 12));
+      })
+      .catch((err) => console.log(err));                                
+  }, [page, refresh]);
 
   function handlePostLike(post) {
     const like = isLiked(post.likes, currentUser._id);
@@ -62,6 +75,8 @@ export function App() {
     });
   }
 
+
+
   return (
     <>
       <UserContext.Provider value={currentUser}>
@@ -86,7 +101,25 @@ export function App() {
             />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-
+           <Stack>
+             {!!pageQty && (
+              <Pagination
+               count={pageQty}
+               page={page}
+               onChange={(_, num) => {
+               window.scroll({
+               top: 0,
+               left: 0,
+               behavior: "instant",
+                  });
+                   setPage(num);
+               }}
+               showFirstButton
+               showLastButton
+               sx={{ marginY: 3, marginX: 'auto' }}
+              />
+              )}
+            </Stack> 
           <AppPagination />
           <Footer />
         </Container>
