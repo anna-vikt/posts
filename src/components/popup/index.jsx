@@ -1,10 +1,17 @@
+
 import './styles.css';
+import { Button } from '@mui/material';
 
 export const Popup = ({popupActive, setPopupActive, children}) => {
+   
+    const handleClickClosePopup = () => {
+        setPopupActive(false)
+    }
+    
     return (
-        <div className={popupActive ? 'popup active' : 'popup'} onClick={() => setPopupActive(false)}>
+        <div className={popupActive ? 'popup active' : 'popup'} onClick={handleClickClosePopup}>
             <div className={popupActive ? 'popup__content active' : 'popup__content'} onClick={e => e.stopPropagation()}>
-            <button className="popup__close btn" onClick={()=>setPopupActive(false)}>Close</button>
+            <Button className="popup__close" onClick={handleClickClosePopup}>Close</Button>
                 {children}
             </div>
         </div>    

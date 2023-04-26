@@ -6,11 +6,14 @@ import cn from 'classnames';
 import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
 import { UserContext } from "../../contexts/current-user-context";
 import { useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 
 
 export function AppHeader({ handleOpenPopup}) {
   const user = useContext(UserContext);
+  const location = useLocation();
+  const initialPath = location.state?.initialPath;
     return (
         <AppBar className={s.appbar} position="static">
         <Toolbar>
@@ -20,7 +23,6 @@ export function AppHeader({ handleOpenPopup}) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={handleOpenPopup}
           >
             <MenuIcon />
           </IconButton>
@@ -29,9 +31,14 @@ export function AppHeader({ handleOpenPopup}) {
           </Typography>
 
           <Button color="inherit" >{user?.name}:{user?.about}</Button>
-          <Button color="inherit" 
-          onClick={handleOpenPopup} >
-              <Add/>Создать пост</Button>
+          <Link to='/create' replace state={{ backgroundLocation: {...location, state: null}, initialPath }}>
+              <Button 
+                color="inherit" 
+                onClick={handleOpenPopup}>
+                  <Add/>Создать пост
+              </Button>
+          </Link>
+          
 
         </Toolbar>
       </AppBar>

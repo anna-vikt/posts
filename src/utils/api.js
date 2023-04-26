@@ -56,6 +56,15 @@ class Api {
         return Promise.all([this.getPostById(idPost), this.getUserInfo()])
     }
 
+    addNewPost({image, title, text}) {
+        return fetch(`${this.#baseUrl}/posts`, {
+            method: 'POST',
+            headers: this.#headers,
+            body: JSON.stringify({image, title, text})
+        })
+            .then(this.#onResponse);
+    }
+
 }
 
 

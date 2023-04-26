@@ -1,9 +1,11 @@
 import { postData } from "../../postData";
 import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
+import { CreateNewPost } from "../create-new-post";
 import { Popup } from "../popup";
 import { Footer } from "../footer";
 import { AppPagination } from "../pagination";
+
 
 import api from "../../utils/api";
 import { useEffect, useState } from "react";
@@ -13,7 +15,7 @@ import { CssBaseline } from "@mui/material";
 import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
 import { NotFoundPage } from "../../pages/notfoundpage";
 
@@ -22,10 +24,12 @@ export function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const handleOpenPopup = () => {
-    setPopupActive(true);
-  };
+  const handleOpenPopup = () => {setPopupActive(true)};
 
+  const location = useLocation();
+  const backgroundLocation = location.state?.backgroundLocation;
+  const initialPath = location.state?.initialPath;
+  
   useEffect(() => {
     api
       .getAllInfo()
@@ -68,7 +72,7 @@ export function App() {
         <CssBaseline />
         <Container>
           <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup} />
-          <Routes>
+          <Routes  location={(backgroundLocation && {...backgroundLocation, pathname: initialPath}) || location } >
             <Route
               path="/postpage/:postID"
               element={<PostPage onPostLike={handlePostLike} />}
@@ -86,18 +90,21 @@ export function App() {
             />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-
           <AppPagination />
           <Footer />
+          {backgroundLocation && <Routes>
+            <Route 
+                path="/create" 
+                element={
+                  <Popup 
+                    popupActive={popupActive}  
+                    setPopupActive={setPopupActive}>
+                    <CreateNewPost  />
+                  </Popup>
+              } 
+              />
+          </Routes> }  
         </Container>
-        <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
-            provident iste voluptates pariatur neque mollitia eum quibusdam
-            numquam iure at eveniet, ipsa aliquam porro vitae. Iure, dolorum.
-            Repellendus, molestiae iure!
-          </p>
-        </Popup>
       </UserContext.Provider>
     </>
   );
