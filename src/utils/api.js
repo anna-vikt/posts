@@ -56,14 +56,15 @@ class Api {
         return Promise.all([this.getPostById(idPost), this.getUserInfo()])
     }
 
-    addNewPost({image, title, text}) {
-        return fetch(`${this.#baseUrl}/posts`, {
-            method: 'POST',
-            headers: this.#headers,
-            body: JSON.stringify({image, title, text})
-        })
-            .then(this.#onResponse);
-    }
+    getPaginate(page) {
+        return fetch(`${this.#baseUrl}/posts/paginate?page=${page}&limit=12`, {
+          headers: this.#headers,
+        }).then(this.#onResponse);
+      }
+
+    getPaginateInfo(page) {
+        return Promise.all([this.getPaginate(page), this.getUserInfo()]);
+      }
 
 }
 
