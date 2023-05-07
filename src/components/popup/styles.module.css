@@ -20,14 +20,15 @@
     padding: 60px;
     background-color: #fff;
     width: 50vw;
+    height: 50vh;
     transform: scale(0.5);
     transition: all 0.5s ease;
 }
 
 .popup__close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 30px;
+    right: 30px;
 }
 
 .popup.active {
@@ -39,3 +40,4 @@
 .popup__content.active {
     transform: scale(1);
 }
+

@@ -1,0 +1,22 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 7px 16px;
+    margin: 8px 0;
+    background: #FFFFFF;
+
+    position: static;
+    width: 100%;
+    border: 1px solid #CFD8DC;
+}
+input:focus {
+    outline: none;
+    border-color: rgb(58, 58, 255);
+
+}
+.textarea {
+    height: auto;
+    min-height: 200px;
+    resize: none;
+}
