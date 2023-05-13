@@ -8,16 +8,23 @@ import cn from "classnames";
 import { useNavigate } from 'react-router';
 import { isLiked } from '../../utils/post';
 import { useState } from 'react';
+import { Delete as DeleteIcon} from '@mui/icons-material';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 dayjs.locale('ru');
 dayjs.extend(relativeTime)
 
-function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments }) {
+function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments, onDelete }) {
   const navigate = useNavigate();
   const like = isLiked(likes, user?._id);
+  const canDelete = user?._id === author?._id;
 
 
   function handleClickButtonLike() {
     onPostLike({ likes, _id })
+  }
+
+  function handleClickDelete() {
+    onDelete({ _id });
   }
 
   return (
@@ -26,6 +33,12 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
         <Button variant="outlined" size="small" onClick={() => { navigate(-1) }} sx={{ margin: '0.5rem 1rem 1rem 0' }}>
           Назад
         </Button>
+        {canDelete && <Button variant="outlined" size="small" onClick={handleClickDelete} sx={{ margin: '0.5rem 1rem 1rem 0' }} >
+         <DeleteIcon /> Удалить пост </Button>
+         }
+         {canDelete && <Button variant="outlined" size="small"  sx={{ margin: '0.5rem 1rem 1rem 0' }} >
+         <ModeEditIcon /> Редактировать пост </Button>
+         }
       </Grid>
 
       <Grid item xs={12} md={8}>
@@ -66,13 +79,11 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
             </div>
             }
           </CardActions>
-
           {comments?.map((item) => (
             <p key={item._id}>
               {item.author.name}: {item.text}
             </p>
           ))}
-
         </CardContent>
       </Grid>
     </Grid>

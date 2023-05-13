@@ -87,7 +87,9 @@ export function App() {
           <Routes location={(backgroundLocation && { ...backgroundLocation, pathname: initialPath }) || location} >
             <Route
               path="/postpage/:postID"
-              element={<PostPage onPostLike={handlePostLike} />}
+              element={<PostPage onPostLike={handlePostLike}
+              onDelete={handlePostDelete} 
+              />}
             />
             <Route
               path="/"
@@ -123,8 +125,6 @@ export function App() {
             />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-
-
           {backgroundLocation && <Routes>
             <Route
               path="/create"
@@ -137,22 +137,7 @@ export function App() {
               }
             />
           </Routes>}
-            <Route 
-                path="/create" 
-                element={
-                  <Popup 
-                    popupActive={popupActive}  
-                    setPopupActive={setPopupActive}>
-                    <CreateNewPost  />
-                  </Popup>
-              } 
-              />
-          </Routes> }
         </Container>
-        <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-
-        </Popup>
-
         <Footer />
       </UserContext.Provider>
     </>
