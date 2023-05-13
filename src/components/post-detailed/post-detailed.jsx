@@ -11,7 +11,7 @@ import { useState } from 'react';
 dayjs.locale('ru');
 dayjs.extend(relativeTime)
 
-function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags }) {
+function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments }) {
   const navigate = useNavigate();
   const like = isLiked(likes, user?._id);
 
@@ -21,9 +21,9 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
   }
 
   return (
-    <Grid container spacing={0}>
+    <Grid className={s.wrapper} container spacing={0}>
       <Grid item xs={12} md={12}>
-        <Button variant="outlined"  size="small" onClick ={() => {navigate(-1)}} sx={{ margin: '0.5rem 1rem 1rem 0' }}>
+        <Button variant="outlined" size="small" onClick={() => { navigate(-1) }} sx={{ margin: '0.5rem 1rem 1rem 0' }}>
           Назад
         </Button>
       </Grid>
@@ -33,7 +33,7 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
         <div className={s.imgWrapper}>
           <CardMedia
             component="img"
-            height="300"
+            height="auto"
             image={image}
             alt={title}
           />
@@ -59,13 +59,19 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
               <LikeIcon />
             </button>
             {likes?.length !== 0 && <div className={s.likes}>{likes?.length}</div>}
-            {tags?.length !==0 && <div className={s.tags}>
-              {tags?.map(el => {
-                return el = `#${el} `
+            {tags?.length !== 0 && <div >
+              {tags?.map((el, index) => {
+                return <span key={index} className={s.tags}>{el = `#${el} `}</span>
               })}
-            </div>}
-
+            </div>
+            }
           </CardActions>
+
+          {comments?.map((item) => (
+            <p key={item._id}>
+              {item.author.name}: {item.text}
+            </p>
+          ))}
 
         </CardContent>
       </Grid>
