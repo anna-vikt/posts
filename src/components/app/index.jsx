@@ -31,15 +31,6 @@ export function App() {
   const backgroundLocation = location.state?.backgroundLocation;
   const initialPath = location.state?.initialPath;
 
-  useEffect(() => {
-    api
-      .getAllInfo()
-      .then(([dataPosts, dataUser]) => {
-        setPosts(dataPosts);
-        setCurrentUser(dataUser);
-      })
-      .catch((data) => console.log(data));
-  }, []);
 
   useEffect(() => {
     api
