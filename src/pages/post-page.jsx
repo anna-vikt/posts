@@ -9,7 +9,7 @@ import { NotFoundPage } from "./notfoundpage";
 const ID_POST = '6432e07daa39712183bd932b';
 
 
-function PostPage() {
+function PostPage({onDelete}) {
     const [post, setPost] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
     const {postID} = useParams();
@@ -33,7 +33,7 @@ function PostPage() {
 
     
     return ( 
-        <PostDetailed {...post} user={currentUser} onPostLike={handlePostLike}/>
+        <PostDetailed {...post} user={currentUser} onPostLike={handlePostLike} onDelete={onDelete}/>
         
      );
 }
