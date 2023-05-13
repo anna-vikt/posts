@@ -78,8 +78,6 @@ export function App() {
     });
   }
 
-
-
   return (
     <>
       <UserContext.Provider value={currentUser}>
@@ -135,11 +133,8 @@ export function App() {
                   </Popup>
               } 
               />
-          </Routes> }  
+          </Routes> }
         </Container>
-        <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
-          
-        </Popup>
       </UserContext.Provider>
     </>
   );

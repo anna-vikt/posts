@@ -4,8 +4,7 @@ import FormInput from '../form-input';
 import Form from "../form";
 import api from '../../utils/api'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
+import { useState} from 'react';
 
 export function CreateNewPost ()  {
     const navigate = useNavigate();
@@ -14,17 +13,20 @@ export function CreateNewPost ()  {
 
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
-    const [text, setText] = useState('')
+    const [text, setText] = useState('');
+    const [tags, setTags] = useState([]);
 
-    const {register, handleSubmit, formState: {errors}, reset} = useForm({mode: "onBlur"});
+    const {register, handleSubmit, formState: {errors, isValid}, reset} = useForm({mode: "onBlur"});
     
-    
-    const cbSubmitForm = (dataForm) => {
-       api.addNewPost(dataForm).catch()
-       
-        
-        reset();
-        
+    const submitForm = (data) => {
+        data.tags = data.tags.split(",");
+        if (data.tags[0] === "") data.tags = [];
+        for (let i = 0; i < data.tags.length; i++) {
+            data.tags[i] = data.tags[i].trim();
+        }
+        // console.log(data)
+        api.addNewPost(data).then(()=> {console.log('post added')});
+        reset();   
     }
     
     const handleClickCancelButton = (e) => {
@@ -50,7 +52,7 @@ export function CreateNewPost ()  {
             message: 'Обязательное поле'
         },
         pattern: {
-            value: /~^https?:\/\/\S+(?:jpg|jpeg)$~/,
+            value: /^https:\/\/(.+?)\/(([a-zA-Z0-9_ \-%\.]*)\.(jpg|jpeg))/,
             message: "Загрузите изображение в формате jpg/jpeg"
         }    
     })
@@ -61,17 +63,20 @@ export function CreateNewPost ()  {
             message: 'Обязательное поле'
         },
         minLength: {
-            value: 150,
+            value: 5,
             message: "Текст поста должен содержать не менее 150 символов"
         }
     })
+
+    const tagsPost = register('tags');
     
+  
     return (
-        <Form title="Create a new post" handleFormSubmit={handleSubmit(cbSubmitForm)}>
+        <Form title="Create a new post" handleFormSubmit={handleSubmit(submitForm)}>
             <FormInput 
                 {...imagePost}
                 id="imagePost" 
-                type="file"
+                type="text"
                 value={image}
                 onChange={(e) =>{setImage(e.target.value)}}
                 placeholder="Загрузите изображение"/>
@@ -93,19 +98,18 @@ export function CreateNewPost ()  {
                 onChange={(e) =>{setText(e.target.value)}} 
                 placeholder="Текст поста" />
             {errors?.textPost && <p className="errorMessage">{errors?.textPost?.message}</p>}
-            <span>Author:  </span>
-            <span>Date of creation:</span>
-
-
-
-            <Button type='submit'>Create Post</Button>
+            <FormInput
+                {...tagsPost}
+                id="tagsPost" 
+                type="text"
+                value={tags}
+                onChange={(e) =>{setTags(e.target.value)}} 
+                placeholder="Добавить тэги" />
+            
+            <Button type='submit' disabled={!isValid}>Create Post</Button>
             <Button type='button'color='secondary' onClick={handleClickCancelButton}>Cancel</Button>
-
-
         </Form>
     )
-
 }
-    
     
 

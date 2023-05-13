@@ -66,6 +66,14 @@ class Api {
         return Promise.all([this.getPaginate(page), this.getUserInfo()]);
       }
 
+    addNewPost(data) {
+    return fetch(`${this.#baseUrl}/posts`, {
+        method: 'POST',
+        headers: this.#headers,
+        body: JSON.stringify(data)
+    }).then(this.#onResponse)
+    }
+
 }
 
 
