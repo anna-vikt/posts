@@ -78,8 +78,6 @@ export function App() {
     });
   }
 
-
-
   return (
     <>
       <UserContext.Provider value={currentUser}>
@@ -139,6 +137,17 @@ export function App() {
               }
             />
           </Routes>}
+            <Route 
+                path="/create" 
+                element={
+                  <Popup 
+                    popupActive={popupActive}  
+                    setPopupActive={setPopupActive}>
+                    <CreateNewPost  />
+                  </Popup>
+              } 
+              />
+          </Routes> }
         </Container>
         <Popup popupActive={popupActive} setPopupActive={setPopupActive}>
 
