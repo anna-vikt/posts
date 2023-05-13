@@ -1,6 +1,9 @@
 .imgWrapper {
     flex: 1;
 }
+.wrapper {
+	min-height: 100%;
+}
 
 .favorite {
     background-color: transparent;

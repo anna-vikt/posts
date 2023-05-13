@@ -25,12 +25,12 @@ export function App() {
   const [refresh, setRefresh] = useState(true);
   const [popupActive, setPopupActive] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const handleOpenPopup = () => {setPopupActive(true)};
+  const handleOpenPopup = () => { setPopupActive(true) };
 
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
   const initialPath = location.state?.initialPath;
-  
+
   useEffect(() => {
     api
       .getAllInfo()
@@ -49,7 +49,7 @@ export function App() {
         setPosts(postsData.posts);
         setPageQty(Math.ceil(postsData.total / 12));
       })
-      .catch((err) => console.log(err));                                
+      .catch((err) => console.log(err));
   }, [page, refresh]);
 
   function handlePostLike(post) {
@@ -64,8 +64,8 @@ export function App() {
       if (!like) {
         setFavorites(prevState => [...prevState, updateCard])
       } else {
-          setFavorites(prevState => prevState.filter(card => card._id !== updateCard._id))
-        }
+        setFavorites(prevState => prevState.filter(card => card._id !== updateCard._id))
+      }
     });
   }
 
@@ -84,57 +84,61 @@ export function App() {
         <CssBaseline />
         <Container>
           <AppHeader user={currentUser} handleOpenPopup={handleOpenPopup} />
-          <Routes  location={(backgroundLocation && {...backgroundLocation, pathname: initialPath}) || location } >
+          <Routes location={(backgroundLocation && { ...backgroundLocation, pathname: initialPath }) || location} >
             <Route
               path="/postpage/:postID"
-              element={<PostPage onPostLike={handlePostLike} />}
+              element={<PostPage onPostLike={handlePostLike}
+              onDelete={handlePostDelete} 
+              />}
             />
             <Route
               path="/"
               element={
-                <PostList
-                  posts={posts}
-                  onPostLike={handlePostLike}
-                  currentUser={currentUser}
-                  onDelete={handlePostDelete}
-                />
+                <>
+                  <PostList
+                    posts={posts}
+                    onPostLike={handlePostLike}
+                    currentUser={currentUser}
+                    onDelete={handlePostDelete}
+                  />
+                  <Stack>
+                    {!!pageQty && (
+                      <Pagination
+                        count={pageQty}
+                        page={page}
+                        onChange={(_, num) => {
+                          window.scroll({
+                            top: 0,
+                            left: 0,
+                            behavior: "instant",
+                          });
+                          setPage(num);
+                        }}
+                        showFirstButton
+                        showLastButton
+                        sx={{ marginY: 3, marginX: 'auto' }}
+                      />
+                    )}
+                  </Stack>
+                </>
               }
             />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-           <Stack>
-             {!!pageQty && (
-              <Pagination
-               count={pageQty}
-               page={page}
-               onChange={(_, num) => {
-               window.scroll({
-               top: 0,
-               left: 0,
-               behavior: "instant",
-                  });
-                   setPage(num);
-               }}
-               showFirstButton
-               showLastButton
-               sx={{ marginY: 3, marginX: 'auto' }}
-              />
-              )}
-            </Stack> 
-          <Footer />
           {backgroundLocation && <Routes>
-            <Route 
-                path="/create" 
-                element={
-                  <Popup 
-                    popupActive={popupActive}  
-                    setPopupActive={setPopupActive}>
-                    <CreateNewPost  />
-                  </Popup>
-              } 
-              />
-          </Routes> }
+            <Route
+              path="/create"
+              element={
+                <Popup
+                  popupActive={popupActive}
+                  setPopupActive={setPopupActive}>
+                  <CreateNewPost />
+                </Popup>
+              }
+            />
+          </Routes>}
         </Container>
+        <Footer />
       </UserContext.Provider>
     </>
   );
