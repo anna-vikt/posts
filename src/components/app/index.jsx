@@ -9,7 +9,7 @@ import api from "../../utils/api";
 import { useEffect, useState } from "react";
 import { isLiked } from "../../utils/post";
 
-import { CssBaseline, Pagination, Stack } from "@mui/material";
+import { CardMedia, CssBaseline, Pagination, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
@@ -17,7 +17,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
 import { NotFoundPage } from "../../pages/notfoundpage";
 
-export function App() {
+export function App({image}) {
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [page, setPage] = useState(1);
@@ -79,8 +79,9 @@ export function App() {
             <Route
               path="/postpage/:postID"
               element={<PostPage onPostLike={handlePostLike}
-              onDelete={handlePostDelete} 
-              />}
+              onDelete={handlePostDelete} handleOpenPopup={handleOpenPopup}
+              />
+            }
             />
             <Route
               path="/"
@@ -127,6 +128,7 @@ export function App() {
                 </Popup>
               }
             />
+            
           </Routes>}
         </Container>
         <Footer />

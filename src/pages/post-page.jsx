@@ -9,7 +9,7 @@ import { NotFoundPage } from "./notfoundpage";
 const ID_POST = '6432e07daa39712183bd932b';
 
 
-function PostPage({onDelete}) {
+function PostPage({onDelete, popupActive, setPopupActive, handleOpenPopup}) {
     const [post, setPost] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
     const {postID} = useParams();
@@ -33,7 +33,7 @@ function PostPage({onDelete}) {
 
     
     return ( 
-        <PostDetailed {...post} user={currentUser} onPostLike={handlePostLike} onDelete={onDelete}/>
+        <PostDetailed {...post} user={currentUser} onPostLike={handlePostLike} onDelete={onDelete} popupActive={popupActive} setPopupActive={setPopupActive} handleOpenPopup={handleOpenPopup} />
         
      );
 }

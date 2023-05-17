@@ -8,15 +8,18 @@ import cn from "classnames";
 import { useNavigate } from 'react-router';
 import { isLiked } from '../../utils/post';
 import { useState } from 'react';
-import { Delete as DeleteIcon} from '@mui/icons-material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { Link, useLocation } from 'react-router-dom';
 dayjs.locale('ru');
 dayjs.extend(relativeTime)
 
-function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments, onDelete }) {
+function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments, onDelete, handleOpenPopup }) {
   const navigate = useNavigate();
   const like = isLiked(likes, user?._id);
   const canDelete = user?._id === author?._id;
+  const location = useLocation();
+  const initialPath = location.state?.initialPath;
 
 
   function handleClickButtonLike() {
@@ -34,23 +37,25 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
           Назад
         </Button>
         {canDelete && <Button variant="outlined" size="small" onClick={handleClickDelete} sx={{ margin: '0.5rem 1rem 1rem 0' }} >
-         <DeleteIcon /> Удалить пост </Button>
-         }
-         {canDelete && <Button variant="outlined" size="small"  sx={{ margin: '0.5rem 1rem 1rem 0' }} >
-         <ModeEditIcon /> Редактировать пост </Button>
-         }
+          <DeleteIcon /> Удалить пост </Button>
+        }
+        {canDelete && <Button variant="outlined" size="small" sx={{ margin: '0.5rem 1rem 1rem 0' }} >
+          <ModeEditIcon /> Редактировать пост </Button>
+        }
       </Grid>
 
       <Grid item xs={12} md={8}>
 
-        <div className={s.imgWrapper}>
-          <CardMedia
-            component="img"
-            height="auto"
-            image={image}
-            alt={title}
-          />
-        </div>
+        <Link to='/postpage/:postID/modal' replace state={{ backgroundLocation: { ...location, state: null }, initialPath }}>
+          <div className={s.imgWrapper} onClick={handleOpenPopup}>
+            <CardMedia
+              component="img"
+              height="auto"
+              image={image}
+              alt={title}
+            />
+          </div>
+        </Link>
       </Grid>
       <Grid item xs={12} md={4}>
         <CardHeader
