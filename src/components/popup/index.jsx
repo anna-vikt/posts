@@ -3,8 +3,10 @@ import s from './styles.module.css';
 import { Button } from '@mui/material';
 import { createPortal } from 'react-dom';
 export const Popup = ({popupActive, setPopupActive, children}) => {
+    
     const handleClickClosePopup = () => {
-        setPopupActive(false)}
+        setPopupActive(false)
+    }
     const renderContent = () => {
         return (
             <div className={cn(s.popup, {[s.active]: popupActive})} onMouseDown={handleClickClosePopup}>

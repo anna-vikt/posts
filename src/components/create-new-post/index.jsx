@@ -5,8 +5,9 @@ import Form from "../form";
 import api from '../../utils/api'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState} from 'react';
+import s from './styles.module.css'
 
-export function CreateNewPost ()  {
+export function CreateNewPost ({handlePostAdd, handleClickCancel})  {
     const navigate = useNavigate();
     const location = useLocation();
     const initialPath = location.state?.initialPath;
@@ -24,16 +25,11 @@ export function CreateNewPost ()  {
         for (let i = 0; i < data.tags.length; i++) {
             data.tags[i] = data.tags[i].trim();
         }
-        // console.log(data)
-        api.addNewPost(data).then(()=> {console.log('post added')});
+        handlePostAdd(data);
+        navigate('/', { replace: true, state:{  backgroundLocation: {...location, state: null}, initialPath }})
         reset();   
     }
     
-    const handleClickCancelButton = (e) => {
-        e.preventDefault();
-        navigate('/', { replace: true, state:{  backgroundLocation: {...location, state: null}, initialPath }})
-
-    }
 
     const titlePost = register('title', {
         required: {
@@ -80,7 +76,7 @@ export function CreateNewPost ()  {
                 value={image}
                 onChange={(e) =>{setImage(e.target.value)}}
                 placeholder="Загрузите изображение"/>
-            {errors?.imagePost && <p className="errorMessage">{errors?.imagePost?.message}</p>}
+            {errors?.image && <p className={s.errorMessage}>{errors?.image?.message}</p>}
             <FormInput
                 {...titlePost}
                 id="titlePost" 
@@ -88,16 +84,15 @@ export function CreateNewPost ()  {
                 value={title}
                 onChange={(e) =>{setTitle(e.target.value)}}
                 placeholder="Заголовок поста" />
-            {errors?.titlePost && <p className="errorMessage">{errors?.titlePost?.message}</p>}
+            {errors?.title && <p className={s.errorMessage}>{errors?.title?.message}</p>}
             <FormInput
                 {...textPost}
                 id="textPost" 
-                typeTag={'textarea'} 
-                type="text"
+                typeTag={'textarea'}
                 value={text}
                 onChange={(e) =>{setText(e.target.value)}} 
                 placeholder="Текст поста" />
-            {errors?.textPost && <p className="errorMessage">{errors?.textPost?.message}</p>}
+            {errors?.text && <p className={s.errorMessage}>{errors?.text?.message}</p>}
             <FormInput
                 {...tagsPost}
                 id="tagsPost" 
@@ -107,7 +102,7 @@ export function CreateNewPost ()  {
                 placeholder="Добавить тэги" />
             
             <Button type='submit' disabled={!isValid}>Create Post</Button>
-            <Button type='button'color='secondary' onClick={handleClickCancelButton}>Cancel</Button>
+            <Button type='button'color='secondary' onClick={handleClickCancel}>Cancel</Button>
         </Form>
     )
 }

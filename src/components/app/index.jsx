@@ -13,7 +13,7 @@ import { CssBaseline, Pagination, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
 import { NotFoundPage } from "../../pages/notfoundpage";
 
@@ -25,7 +25,9 @@ export function App() {
   const [refresh, setRefresh] = useState(true);
   const [popupActive, setPopupActive] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  
   const handleOpenPopup = () => { setPopupActive(true) };
+  const navigate = useNavigate();
 
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
@@ -59,6 +61,10 @@ export function App() {
       }
     });
   }
+  function handlePostAdd(data) {
+    api.addNewPost(data).then(() => page === 1 ? setRefresh((refresh) => !refresh) : setPage(1))
+    
+  }
 
   function handlePostDelete(post) {
     api.deletePost(post._id).then((updatePost) => {
@@ -68,6 +74,11 @@ export function App() {
       setPosts(newPosts);
     });
   }
+
+  const handleClickCancelButton = (e) => {
+    e.preventDefault();
+    navigate('/', { replace: true, state:{  backgroundLocation: {...location, state: null}, initialPath }})
+}
 
   return (
     <>
@@ -123,7 +134,7 @@ export function App() {
                 <Popup
                   popupActive={popupActive}
                   setPopupActive={setPopupActive}>
-                  <CreateNewPost />
+                  <CreateNewPost handlePostAdd={handlePostAdd} handleClickCancel={handleClickCancelButton}/>
                 </Popup>
               }
             />
