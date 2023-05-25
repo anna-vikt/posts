@@ -74,6 +74,14 @@ class Api {
     }).then(this.#onResponse)
     }
 
+    editPost(_id, data) {
+        return fetch(`${this.#baseUrl}/posts/${_id}`, {
+            method: 'PATCH',
+            headers: this.#headers,
+            body: JSON.stringify(data)
+        }).then(this.#onResponse)
+        }
+
 }
 
 
