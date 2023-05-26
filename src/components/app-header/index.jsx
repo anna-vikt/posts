@@ -1,7 +1,7 @@
 import s from "./styles.module.css";
 import { Menu as MenuIcon, Add } from '@mui/icons-material';
 import cn from 'classnames';
-import { AppBar, IconButton, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Typography, Button, ButtonBase } from "@mui/material";
 import { UserContext } from "../../contexts/current-user-context";
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -25,7 +25,7 @@ export function AppHeader({ handleOpenPopup}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Posts
           </Typography>
-          <Button color="inherit" >{user?.name}:{user?.about}</Button>
+          <Button className = {s.user} color="inherit" >{user?.name}:{user?.about}</Button>
           <Link to='/create' replace state={{ backgroundLocation: {...location, state: null}, initialPath }}>
               <Button 
                 color="inherit" 

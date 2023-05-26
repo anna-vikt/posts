@@ -39,3 +39,7 @@
 .likes {
     padding-left: 1rem;
 }
+
+.cardImage {
+    min-width: 260px;
+}

@@ -24,7 +24,6 @@ function PostPage({onDelete}) {
     useEffect(() => {
         api.getInfoPost(postID)
             .then(([postData, userData]) => {
-                console.log(postData, userData);
                 setPost(postData);
                 setCurrentUser(userData)
             })

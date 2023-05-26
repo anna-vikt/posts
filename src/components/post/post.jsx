@@ -77,7 +77,7 @@ export const Post = ({
           subheader={dayjs(created_at).fromNow()}
         />
         <Link to={`postpage/${_id}`}>
-          <CardMedia component="img" height="194" image={image} alt={title} />
+          <CardMedia className="cardImage" component="img" height="194" image={image} alt={title} />
         </Link>
 
         <CardContent>
