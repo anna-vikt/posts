@@ -2,6 +2,7 @@ import { postData } from "../../postData";
 import { AppHeader } from "../app-header";
 import { PostList } from "../post-list/post-list";
 import { CreateNewPost } from "../create-new-post";
+import { EditPost } from "../edit-post";
 import { Popup } from "../popup";
 import { Footer } from "../footer";
 
@@ -13,7 +14,7 @@ import { CssBaseline, Pagination, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import PostDetailed from "../post-detailed/post-detailed";
 import PostPage from "../../pages/post-page";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import { UserContext } from "../../contexts/current-user-context";
 import { NotFoundPage } from "../../pages/notfoundpage";
 
@@ -25,13 +26,15 @@ export function App() {
   const [refresh, setRefresh] = useState(true);
   const [popupActive, setPopupActive] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  
-  const handleOpenPopup = () => { setPopupActive(true) };
+
   const navigate = useNavigate();
 
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
   const initialPath = location.state?.initialPath;
+
+  const handleOpenPopup = () => { setPopupActive(true) };
+  const handleClickClosePopup = () => {setPopupActive(false)}
 
 
   useEffect(() => {
@@ -62,8 +65,10 @@ export function App() {
     });
   }
   function handlePostAdd(data) {
-    api.addNewPost(data).then(() => page === 1 ? setRefresh((refresh) => !refresh) : setPage(1))
-    
+    api.addNewPost(data).then(() => page === 1 ? setRefresh((refresh) => !refresh) : setPage(1)) 
+  }
+  function handlePostEdit(_id, data) {
+    api.editPost(_id, data).then(() => setRefresh((refresh) => !refresh)) 
   }
 
   function handlePostDelete(post) {
@@ -90,7 +95,9 @@ export function App() {
             <Route
               path="/postpage/:postID"
               element={<PostPage onPostLike={handlePostLike}
-              onDelete={handlePostDelete} 
+              onDelete={handlePostDelete}
+              onEdit={handleOpenPopup} 
+              
               />}
             />
             <Route
@@ -102,6 +109,7 @@ export function App() {
                     onPostLike={handlePostLike}
                     currentUser={currentUser}
                     onDelete={handlePostDelete}
+                    
                   />
                   <Stack>
                     {!!pageQty && (
@@ -133,8 +141,18 @@ export function App() {
               element={
                 <Popup
                   popupActive={popupActive}
-                  setPopupActive={setPopupActive}>
+                  onClose={handleClickClosePopup}>
                   <CreateNewPost handlePostAdd={handlePostAdd} handleClickCancel={handleClickCancelButton}/>
+                </Popup>
+              }
+            />
+            <Route
+              path="/edit/:id"
+              element={
+                <Popup
+                  popupActive={popupActive}
+                  onClose={handleClickClosePopup}>
+                  <EditPost handlePostEdit={handlePostEdit} handleClickCancel={handleClickCancelButton}/>
                 </Popup>
               }
             />

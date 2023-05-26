@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { ReactComponent as LikeIcon } from '../../images/save.svg';
 import cn from "classnames";
 import { useNavigate } from 'react-router';
+import { Link, useLocation } from "react-router-dom";
 import { isLiked } from '../../utils/post';
 import { useState } from 'react';
 import { Delete as DeleteIcon} from '@mui/icons-material';
@@ -13,11 +14,13 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 dayjs.locale('ru');
 dayjs.extend(relativeTime)
 
-function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments, onDelete }) {
+function PostDetailed({ image, title, text, author, created_at, user, likes, _id, onPostLike, tags, comments, onDelete, onEdit }) {
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const initialPath = location.state?.initialPath;
   const like = isLiked(likes, user?._id);
   const canDelete = user?._id === author?._id;
-
 
   function handleClickButtonLike() {
     onPostLike({ likes, _id })
@@ -26,6 +29,10 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
   function handleClickDelete() {
     onDelete({ _id });
   }
+  function handleClickEdit() {
+    onEdit()
+  }
+  const editUrl = '/edit';
 
   return (
     <Grid className={s.wrapper} container spacing={0}>
@@ -36,8 +43,12 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
         {canDelete && <Button variant="outlined" size="small" onClick={handleClickDelete} sx={{ margin: '0.5rem 1rem 1rem 0' }} >
          <DeleteIcon /> Удалить пост </Button>
          }
-         {canDelete && <Button variant="outlined" size="small"  sx={{ margin: '0.5rem 1rem 1rem 0' }} >
+         {canDelete && 
+         <Link to={{pathname:`/edit/${_id}`, state:{postId:_id}} } replace state={{ backgroundLocation: {...location, state: null}, initialPath, postId:_id}}>
+          <Button onClick={handleClickEdit} variant="outlined" size="small"  sx={{ margin: '0.5rem 1rem 1rem 0' }} >
          <ModeEditIcon /> Редактировать пост </Button>
+         </Link>
+         
          }
       </Grid>
 
@@ -90,3 +101,4 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
   )
 }
 export default PostDetailed;
+

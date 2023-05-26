@@ -2,10 +2,10 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 import FormInput from '../form-input';
 import Form from "../form";
-import api from '../../utils/api'
+import api from '../../utils/api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState} from 'react';
-import s from './styles.module.css'
+import s from './styles.module.css';
 
 export function CreateNewPost ({handlePostAdd, handleClickCancel})  {
     const navigate = useNavigate();
