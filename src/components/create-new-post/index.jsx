@@ -17,7 +17,7 @@ export function CreateNewPost ({handlePostAdd, handleClickCancel})  {
     const [text, setText] = useState('');
     const [tags, setTags] = useState([]);
 
-    const {register, handleSubmit, formState: {errors, isValid}, reset} = useForm({mode: "onBlur"});
+    const {register, handleSubmit, formState: {errors, isValid}, reset} = useForm({mode: 'onBlur'});
     
     const submitForm = (data) => {
         data.tags = data.tags.split(",");
