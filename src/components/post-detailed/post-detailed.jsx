@@ -8,7 +8,6 @@ import cn from "classnames";
 import { useNavigate } from 'react-router';
 import { Link, useLocation } from "react-router-dom";
 import { isLiked } from '../../utils/post';
-import { useState } from 'react';
 import { Delete as DeleteIcon} from '@mui/icons-material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 dayjs.locale('ru');
@@ -32,8 +31,7 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
   function handleClickEdit() {
     onEdit()
   }
-  const editUrl = '/edit';
-
+  
   return (
     <Grid className={s.wrapper} container spacing={0}>
       <Grid item xs={12} md={12}>
@@ -44,7 +42,7 @@ function PostDetailed({ image, title, text, author, created_at, user, likes, _id
          <DeleteIcon /> Удалить пост </Button>
          }
          {canDelete && 
-         <Link to={{pathname:`/edit/${_id}`, state:{postId:_id}} } replace state={{ backgroundLocation: {...location, state: null}, initialPath, postId:_id}}>
+         <Link to={{pathname:`/edit/${_id}`}} replace state={{ backgroundLocation: {...location, state: null}, initialPath, postId:_id}}>
           <Button onClick={handleClickEdit} variant="outlined" size="small"  sx={{ margin: '0.5rem 1rem 1rem 0' }} >
          <ModeEditIcon /> Редактировать пост </Button>
          </Link>

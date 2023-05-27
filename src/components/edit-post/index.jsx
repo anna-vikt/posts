@@ -4,22 +4,20 @@ import FormInput from '../form-input';
 import Form from "../form";
 import api from '../../utils/api'
 import { useLocation, useNavigate} from 'react-router-dom';
-import { useState, useEffect} from 'react';
+import { useState} from 'react';
 import s from './styles.module.css'
-
 
 export function EditPost ({handlePostEdit, handleClickCancel})  {
     
     const navigate = useNavigate();
     const location = useLocation();
     const initialPath = location.state?.initialPath;
-    
+
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [tags, setTags] = useState(['']);
+    const [tags, setTags] = useState([]);
     const {state:{postId}} = location;
-   
 
     const {register, handleSubmit, formState: {errors, isValid}, reset} = useForm(
         {
@@ -42,9 +40,7 @@ export function EditPost ({handlePostEdit, handleClickCancel})  {
             for (let i = 0; i < data.tags.length; i++) {
                 data.tags[i] = data.tags[i].trim();
             }
-
         }
-        
         console.log('dataForm', data)
         handlePostEdit(postId, data);
         navigate('/', { replace: true, state:{ backgroundLocation: {...location, state: null}, initialPath }})

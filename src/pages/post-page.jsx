@@ -32,5 +32,4 @@ function PostPage({onDelete, onEdit}) {
            
      );
 }
-
 export default PostPage;
