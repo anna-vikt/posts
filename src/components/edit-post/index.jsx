@@ -13,29 +13,13 @@ export function EditPost ({handlePostEdit, handleClickCancel})  {
     const navigate = useNavigate();
     const location = useLocation();
     const initialPath = location.state?.initialPath;
-    // const [post, setPost] = useState();
     
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [tags, setTags] = useState(['']);
     const {state:{postId}} = location;
-    // console.log(location)
-
-    // console.log('postID', postId)
-//     useEffect(() => {   
-//       api.getInfoPost(postId)
-//           .then(([postData]) => {
-//             setImage(postData.image);                 
-//             setTitle(postData.title);                 
-//             setText(postData.text);                 
-//             setTags(postData.tags);                 
-//           }).catch((err)=>{
-//             console.log(err)
-
-//           })      
-//   },[])
-
+   
 
     const {register, handleSubmit, formState: {errors, isValid}, reset} = useForm(
         {

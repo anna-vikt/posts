@@ -46,7 +46,7 @@ export function App() {
         setPageQty(Math.ceil(postsData.total / 12));
       })
       .catch((err) => console.log(err));
-  }, [page, refresh]);
+  }, [page, refresh, posts]);
 
   function handlePostLike(post) {
     const like = isLiked(post.likes, currentUser._id);
